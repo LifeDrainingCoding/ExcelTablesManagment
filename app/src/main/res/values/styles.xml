@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="TextAppearance.AppCompat.Button.textStyle" parent="FirebaseUI">
+    <style name="TextAppearance.AppCompat.Button.textStyles" parent="FirebaseUI">
         <item name="android:textColor">#09ECD5</item>
         <item name="font" > @id/italic</item>
     </style>
