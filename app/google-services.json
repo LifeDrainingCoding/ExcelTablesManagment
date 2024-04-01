@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "889124208118",
+    "project_id": "tough-study-403801",
+    "storage_bucket": "tough-study-403801.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889124208118:android:832a5cabf64abb7aa4dbd7",
+        "android_client_info": {
+          "package_name": "com.kursach.ckursach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFvUbWCYuwp0qNtSw4ZVd2Vj1eV14PwR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
