@@ -21,21 +21,24 @@
             android:textSize="20sp"/>
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="297dp"
-            android:layout_height="96dp"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.495" app:layout_constraintVertical_bias="0.197"
             android:id="@+id/linearLayout">
         <EditText
+                style="@style/TextView.textStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextEmail"
                 android:background="@drawable/border_edit_text"
-                android:layout_weight="1" android:hint="Login" android:textAlignment="center"/>
+                android:layout_weight="1" android:hint="Email" android:textAlignment="center"/>
         <EditText
+                style="@style/TextView.textStyle"
                 android:background="@drawable/border_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
