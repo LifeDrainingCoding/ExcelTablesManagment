@@ -18,6 +18,7 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 style="@style/TextView.textStyle"
+
                 android:id="@+id/editTextLoginEmail"
                 android:background="@drawable/border_edit_text"
                 android:layout_weight="1" android:hint="Login" android:textAlignment="center"/>
@@ -26,10 +27,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
+
                 android:ems="10"
                 style="@style/TextView.textStyle"
                 android:id="@+id/editTextLoginPassword"
-                android:layout_weight="1" android:textAlignment="center" android:hint="Password"/>
+                android:layout_weight="1" android:textAlignment="center"
+
+                android:hint="Password"/>
     </LinearLayout>
     <com.google.android.material.button.MaterialButton
             android:text="Log in"
@@ -41,6 +45,8 @@
             android:background="@drawable/purple_gradient"
             app:backgroundTintMode="multiply"
             app:layout_constraintVertical_bias="0.395"
+            android:textAlignment="center"
+            android:gravity="center"
             android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
             android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
             android:textSize="20sp"/>
