@@ -4,6 +4,8 @@
         <item name="android:textColor">#09ECD5</item>
         <item name="fontFamily" >@font/alatsi</item>
         <item name="android:fontStyle">italic</item>
+        <item name="android:gravity">center </item>
+        <item name="android:textAlignment">center</item>
     </style>
     <style name="TextView.textStyle" parent="FirebaseUI">
         <item name="android:textColor">@color/black</item>

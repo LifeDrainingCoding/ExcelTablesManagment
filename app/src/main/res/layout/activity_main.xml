@@ -45,8 +45,7 @@
             android:background="@drawable/purple_gradient"
             app:backgroundTintMode="multiply"
             app:layout_constraintVertical_bias="0.395"
-            android:textAlignment="center"
-            android:gravity="center"
+
             android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
             android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
             android:textSize="20sp"/>
