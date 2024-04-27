@@ -43,6 +43,8 @@ public class PlaceholderContent {
     }
 
     private static PlaceholderItem createPlaceholderItem(int position) {
+        long creationDate = metadata.getCreationTimestamp();
+        long lastLogin = metadata.getLastSignInTimestamp();
         if (position == 1){
 
 

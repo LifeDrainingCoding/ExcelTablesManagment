@@ -2,6 +2,7 @@ package com.kursach.ckursach;
 
 import android.content.Context;
 import android.os.Bundle;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.material.button.MaterialButton;
 import com.kursach.ckursach.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a list of Items.
  */
-public class UserMetadataFragment extends Fragment {
+public class UserMetadataFragment extends DialogFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -53,7 +55,13 @@ public class UserMetadataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_metadata_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        MaterialButton  closeButton = view.findViewById(R.id.closeDialogBtn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
             Context context = view.getContext();
             RecyclerView recyclerView = view.findViewById(R.id.list);
             if (mColumnCount <= 1) {
@@ -62,7 +70,7 @@ public class UserMetadataFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new UserMetadataRecyclerViewAdapter(PlaceholderContent.ITEMS));
-        }
+
         return view;
     }
 }
