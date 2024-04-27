@@ -4,10 +4,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseUserMetadata;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -43,15 +41,22 @@ public class PlaceholderContent {
     }
 
     private static PlaceholderItem createPlaceholderItem(int position) {
-        long creationDate = metadata.getCreationTimestamp();
-        long lastLogin = metadata.getLastSignInTimestamp();
+        long creationDateLong = metadata.getCreationTimestamp();
+        long lastLoginLong = metadata.getLastSignInTimestamp();
+        Date creationDate = new Date(creationDateLong);
+        Date lastLogin = new Date(lastLoginLong);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
+        String creationDateString, lastLoginString;
+        creationDateString  = sdf.format(creationDate);
+        lastLoginString  = sdf.format(lastLogin);
+
         if (position == 1){
 
 
-        return new PlaceholderItem(String.valueOf(position), "Creation date: "+String.valueOf(metadata.getCreationTimestamp()), makeDetails(position));}
+        return new PlaceholderItem(String.valueOf(position), "Creation date: "+creationDateString, makeDetails(position));}
 
         else {
-            return new PlaceholderItem(String.valueOf(position), "Last login: " + String.valueOf(metadata.getLastSignInTimestamp()), makeDetails(position));
+            return new PlaceholderItem(String.valueOf(position), "Last login: " + lastLoginString, makeDetails(position));
         }
     }
 
