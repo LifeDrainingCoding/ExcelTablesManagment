@@ -13,9 +13,8 @@ import android.os.Bundle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.*;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +40,7 @@ public class Register_Activity extends AppCompatActivity {
        regBtn =  (MaterialButton ) findViewById(R.id.register_btn);
        email =  findViewById(R.id.editTextEmail);
        password =  findViewById(R.id.editTextTextPassword);
+       storageRef = FirebaseStorage.getInstance().getReference();
 
     }
 
@@ -69,6 +69,9 @@ public class Register_Activity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(Register_Activity.this, "Email Already Exists, use other email.", Toast.LENGTH_LONG).show();
+                            }
                             Toast.makeText(Register_Activity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
