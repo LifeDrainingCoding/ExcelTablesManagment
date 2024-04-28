@@ -1,25 +1,15 @@
 package com.kursach.ckursach;
-
-
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.android.gms.common.api.Result;
-import com.google.android.gms.common.api.TransformedResult;
-import com.google.android.gms.common.api.internal.ListenerHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
@@ -27,14 +17,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
-import com.google.gson.stream.JsonWriter;
+
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText email, password;
     private TextView registerTxtView;
     private StorageReference storageRef;
+
+
 
 
     @Override

@@ -35,7 +35,11 @@
             android:layout_height="500dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/recyclerView"/>
+            android:id="@+id/list_of_csv"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".List_Of_Avaible_Tabs"
+            tools:listitem="@layout/csv_name_item"
+    />
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"

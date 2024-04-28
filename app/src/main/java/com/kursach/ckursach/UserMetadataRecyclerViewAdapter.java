@@ -11,11 +11,6 @@ import com.kursach.ckursach.databinding.FragmentUserMetadataBinding;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class UserMetadataRecyclerViewAdapter extends RecyclerView.Adapter<UserMetadataRecyclerViewAdapter.ViewHolder> {
 
     private final List<PlaceholderItem> mValues;

@@ -1,5 +1,6 @@
 package com.kursach.ckursach;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +31,7 @@ import java.util.function.Consumer;
 
 public class UserPanel_Activity extends AppCompatActivity {
     private Boolean isShowed = false;
-    private  Button showMetadataBtn;
+    private  Button showMetadataBtn, gotoTablesBtn;
     private TextView emailView, passwordView;
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -44,6 +45,7 @@ public class UserPanel_Activity extends AppCompatActivity {
         emailView = findViewById(R.id.userEmail);
         passwordView =  findViewById(R.id.userPassword);
         auth = FirebaseAuth.getInstance();
+        gotoTablesBtn =  findViewById(R.id.gotoTablesList);
         user =  auth.getCurrentUser();
         showMetadataBtn =  findViewById(R.id.metadataBtn);
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -61,7 +63,14 @@ public class UserPanel_Activity extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(),"User Metadata");
             }
         });
-
+gotoTablesBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent =  new Intent(UserPanel_Activity.this, List_Of_Avaible_Tabs.class);
+        startActivity(intent);
+        finish();
+    }
+});
         //TODO: сделать получение пароля  password =   passwordView.getText().toString()+" "+user.get
 
     }
