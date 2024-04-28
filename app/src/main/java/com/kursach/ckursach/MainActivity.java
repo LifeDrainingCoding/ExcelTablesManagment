@@ -53,8 +53,13 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(email.getText().toString(), password.getText().toString());
-            }
+
+                if(email.getText().toString().isEmpty() || password.getText().toString().isEmpty()|| !email.getText().toString().contains("@")) {
+                    Toast.makeText(MainActivity.this, "Please enter a valid email address!", Toast.LENGTH_SHORT).show();
+                }else {
+                    signIn(email.getText().toString(), password.getText().toString());
+                }
+                }
         });
         registerTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
-        email = "ancenkokirill104@gmail.com";
-        password = "dk137dark3";//todo DELETE THIS IN RELEASE
+//        email = "ancenkokirill104@gmail.com";
+//        password = "dk137dark3";//todo DELETE THIS IN RELEASE
 
         String finalEmail1 = email;
         String finalPassword = password;

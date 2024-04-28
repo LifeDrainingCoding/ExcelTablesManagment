@@ -50,7 +50,11 @@ public class Register_Activity extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(email.getText().toString(), password.getText().toString());
+                if(email.getText().toString().isEmpty() || password.getText().toString().isEmpty()|| !email.getText().toString().contains("@")) {
+                    Toast.makeText(Register_Activity.this, "Please enter a valid email address!", Toast.LENGTH_SHORT).show();
+                }else {
+                    createAccount(email.getText().toString(), password.getText().toString());
+                }
             }
         });
     }
