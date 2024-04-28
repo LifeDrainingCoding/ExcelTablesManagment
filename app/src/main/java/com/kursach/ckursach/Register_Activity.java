@@ -1,5 +1,7 @@
 package com.kursach.ckursach;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +16,22 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Register_Activity extends AppCompatActivity {
     private FirebaseAuth auth;
     public static final String TAG = "Register Activity";
     private Button regBtn;
     private EditText email,password;
+    StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +64,7 @@ public class Register_Activity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = auth.getCurrentUser();
+                            createUserFolder(email,password);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -64,5 +76,38 @@ public class Register_Activity extends AppCompatActivity {
                 });
 
         // [END create_user_with_email]
+    }
+    public void createUserFolder( String email,String password)  {
+
+        ArrayList<String> strings =   new ArrayList<>(Arrays.asList(email.split("@")));
+        strings.remove(1);
+
+        String folderName = strings.get(0);
+        Consts.getInstance().setUserName(folderName);
+        StorageReference usersFolderRef = storageRef.child("users");
+        StorageReference userFolderRef = usersFolderRef.child(folderName).child(folderName+".txt");
+        FileOutputStream outputStream;
+        try{
+            outputStream = openFileOutput(folderName+".txt", Context.MODE_PRIVATE);
+            outputStream.write((email+"\n"+password).getBytes());
+
+        }catch (IOException ex){
+            Log.e(TAG, "createUserFolder: ", ex);
+
+        }
+        FileInputStream inputStream;
+        try{
+            inputStream = openFileInput(folderName+".txt");
+            userFolderRef.putStream(inputStream).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
+                    Intent intent =  new Intent(Register_Activity.this, UserPanel_Activity.class);
+                    startActivity(intent);
+                }});
+
+        }catch (IOException ex){
+            Log.e(TAG, "createUserFolder: ", ex);
+        }
+
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = "LogIn_Activity";
     private MaterialButton signInButton;
     private EditText email, password;
-    StorageReference storageRef;
+    private TextView registerTxtView;
+    private StorageReference storageRef;
 
 
     @Override
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.login_btn);
         email = findViewById(R.id.editTextLoginEmail);
         password =  findViewById(R.id.editTextLoginPassword);
+        registerTxtView = findViewById(R.id.registerTextView);
         storageRef = FirebaseStorage.getInstance().getReference();
     }
     @Override
@@ -61,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn(email.getText().toString(), password.getText().toString());
+            }
+        });
+        registerTxtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(MainActivity.this, Register_Activity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -75,10 +86,7 @@ public class MainActivity extends AppCompatActivity {
         // [START sign_in_with_email]
         email = "ancenkokirill104@gmail.com";
         password = "dk137dark3";//todo DELETE THIS IN RELEASE
-        ArrayList<String> strings =   new ArrayList<>(Arrays.asList(email.split("@")));
-        strings.remove(1);
 
-        String folderName = strings.get(0);
         String finalEmail1 = email;
         String finalPassword = password;
         auth.signInWithEmailAndPassword(email, password)
@@ -88,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            createUserFolder(folderName, finalEmail1, finalPassword);
+                            createUserFolder( finalEmail1, finalPassword);
 
 
                         } else {
@@ -101,9 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 });
         // [END sign_in_with_email]
     }
-    public void createUserFolder(String folderName, String email,String password)  {
+    public void createUserFolder( String email,String password)  {
 
+        ArrayList<String> strings =   new ArrayList<>(Arrays.asList(email.split("@")));
+        strings.remove(1);
 
+        String folderName = strings.get(0);
         Consts.getInstance().setUserName(folderName);
         StorageReference usersFolderRef = storageRef.child("users");
         StorageReference userFolderRef = usersFolderRef.child(folderName).child(folderName+".txt");
