@@ -30,6 +30,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center"
                 android:gravity="center"
+
                 android:textAlignment="center"
                 android:background="@drawable/text_view_border"
                 style="@style/TextView.textStyle"
