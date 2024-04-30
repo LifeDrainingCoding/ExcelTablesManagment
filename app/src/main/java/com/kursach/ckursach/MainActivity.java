@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void signIn(String email, String password) {
 //         [START sign_in_with_email]
         email = "ancenkokirill104@gmail.com";
-        password = "dk137dark3";//todo DELETE THIS IN RELEASE
+        password = "123456";//todo DELETE THIS IN RELEASE
 
         String finalEmail1 = email;
         String finalPassword = password;
