@@ -7,6 +7,7 @@ plugins {
 
 }
 
+
 android {
     namespace 'com.kursach.ckursach'
     compileSdk 34
@@ -50,8 +51,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
 
-
-
+    implementation 'io.github.chochanaresh:filepicker:0.1.9'// update
     // To use Kotlin Symbol Processing (KSP)
     implementation 'com.google.firebase:firebase-auth'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'

@@ -1,7 +1,6 @@
 package com.kursach.ckursach;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,24 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class UserPanel_Activity extends AppCompatActivity {
@@ -66,7 +58,7 @@ public class UserPanel_Activity extends AppCompatActivity {
 gotoTablesBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        Intent intent =  new Intent(UserPanel_Activity.this, List_Of_Avaible_Tabs.class);
+        Intent intent =  new Intent(UserPanel_Activity.this, ListOfAvailableTabsActivity.class);
         startActivity(intent);
         finish();
     }

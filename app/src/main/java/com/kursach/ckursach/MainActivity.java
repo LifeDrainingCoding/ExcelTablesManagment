@@ -1,12 +1,17 @@
 package com.kursach.ckursach;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         registerTxtView = findViewById(R.id.registerTextView);
         storageRef = FirebaseStorage.getInstance().getReference();
     }
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onStart() {
         super.onStart();
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     signIn(email.getText().toString(), password.getText().toString());
                 }
+                signIn(email.getText().toString(), password.getText().toString());// TODO: 29.04.2024 delete this in release
                 }
         });
         registerTxtView.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+       requestPermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+       requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
     }
 
 
@@ -78,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void signIn(String email, String password) {
-        // [START sign_in_with_email]
-//        email = "ancenkokirill104@gmail.com";
-//        password = "dk137dark3";//todo DELETE THIS IN RELEASE
+//         [START sign_in_with_email]
+        email = "ancenkokirill104@gmail.com";
+        password = "dk137dark3";//todo DELETE THIS IN RELEASE
 
         String finalEmail1 = email;
         String finalPassword = password;
@@ -104,6 +114,19 @@ public class MainActivity extends AppCompatActivity {
                 });
         // [END sign_in_with_email]
     }
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // feature requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                }
+            });
     public void createUserFolder( String email,String password)  {
 
         ArrayList<String> strings =   new ArrayList<>(Arrays.asList(email.split("@")));

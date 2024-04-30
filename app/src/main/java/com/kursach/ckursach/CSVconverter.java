@@ -1,5 +1,6 @@
 package com.kursach.ckursach;
 
+import android.util.Log;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CSVconverter {
+    private static final String TAG = "CSVconverter";
     public String convertCSVtoExcel(String csvPath  ){
 
         String filename = FilenameUtils.getBaseName(csvPath);
@@ -58,7 +60,7 @@ public class CSVconverter {
             workbook.write(outputStream);
             outputStream.close();
 
-            System.out.println("CSV файл успешно конвертирован в Excel.");
+            Log.i(TAG, "convertCSVtoExcel: Successfully converted to excel file ");
         } catch (Exception e) {
             e.printStackTrace();
         }
