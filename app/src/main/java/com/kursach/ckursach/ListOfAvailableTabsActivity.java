@@ -45,5 +45,9 @@ public class ListOfAvailableTabsActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Consts.getInstance().execute(recyclerView);
+    }
 }

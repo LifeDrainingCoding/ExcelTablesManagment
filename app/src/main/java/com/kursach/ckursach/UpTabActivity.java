@@ -1,32 +1,56 @@
 package com.kursach.ckursach;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.nareshchocha.filepickerlibrary.models.DocumentFilePickerConfig;
+import com.nareshchocha.filepickerlibrary.models.PopUpConfig;
+import com.nareshchocha.filepickerlibrary.models.PopUpType;
 import com.nareshchocha.filepickerlibrary.ui.FilePicker;
 import com.nareshchocha.filepickerlibrary.utilities.appConst.Const;
+import org.apache.commons.io.FilenameUtils;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class UpTabActivity extends AppCompatActivity {
-    private  MaterialButton chooseTabBtn,ChooseTabsBtn, uploadBtn;
+    private  MaterialButton chooseTabBtn,chooseTabsBtn, uploadBtn,backToTabsListBtn;
     private EditText editTextPath;
-    private boolean isFolderChosen;
+    private boolean isMultipleChoice;
+    StorageReference storageReference;
+    private static final String  TAG = "UpTabActivity";
+    private  File fileToUpload;
+    private ArrayList<File> filesToUpload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_up_tab);
-        chooseTabBtn =  findViewById(R.id.choose_path_btn);
+        chooseTabBtn =  findViewById(R.id.choose_file_path_btn);
+        chooseTabsBtn =  findViewById(R.id.choose_files_path_btn);
+        uploadBtn = findViewById(R.id.upload_btn);
+        backToTabsListBtn =  findViewById(R.id.back_to_list_tabs_btn);
         editTextPath =  findViewById(R.id.editTextPath);
     }
 
@@ -35,37 +59,45 @@ public class UpTabActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         chooseTabBtn.setOnClickListener(v ->{
-            isFolderChosen = false;
-        openFileChooser(); });
+            isMultipleChoice = false;
+        openFileChooser(isMultipleChoice); });
+        chooseTabsBtn.setOnClickListener(v ->{
+           isMultipleChoice = true;
+           openFileChooser(isMultipleChoice);
+        });
+        uploadBtn.setActivated(false);
+        uploadBtn.setClickable(false);
+        uploadBtn.setVisibility(View.GONE);
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isMultipleChoice == true){
+                    uploadFiles(filesToUpload);
+                }else {
+                    uploadFiles(fileToUpload);
+                }
+            }
+        });
+        backToTabsListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UpTabActivity.this, ListOfAvailableTabsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
     }
 
-    public void openFileChooser() {
- Intent intent = new FilePicker.Builder(this).addPickDocumentFile(null).build();
-        // Создаем Intent для открытия нативного окна выбора файлов
-
-
-        // Указываем типы файлов, которые пользователь может выбрать
+    public void openFileChooser(boolean multipleChoice) {
+        if (multipleChoice == true){
+         Intent intent = new FilePicker.Builder(this).addPickDocumentFile(new DocumentFilePickerConfig(null,null,true,null,null,null,null,null,null)).build();
         launcher.launch(intent);
-//        try {
-//
-//
-//            launcher.launch(intent);
-//        }catch (ActivityNotFoundException ex){
-//            Toast.makeText(getApplicationContext(),"File Chooser Failed",Toast.LENGTH_LONG).show();
-//            Intent intent1 = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//            // Указываем типы файлов, которые пользователь может выбрать
-//            intent.setType("text/csv"); // Можно указать конкретные типы MIME, если нужно ограничить выбор
-//            // Устанавливаем флаги, чтобы разрешить только чтение файлов
-//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            try {
-//
-//
-//                launcher.launch(intent1);
-//            }catch (ActivityNotFoundException exception){
-//                Toast.makeText(getApplicationContext(),"File Chooser2 Failed",Toast.LENGTH_LONG).show();
-//            }
-//        }
+        }else {
+            Intent intent = new FilePicker.Builder(this).addPickDocumentFile(null).setPopUpConfig(new PopUpConfig("Choose profile", null, PopUpType.BOTTOM_SHEET, RecyclerView.VERTICAL)).build();
+            launcher.launch(intent);
+        }
 
     }
 
@@ -77,29 +109,29 @@ public class UpTabActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK) {
-if(isFolderChosen == false) {
+if(isMultipleChoice == false) {
 
 
     Intent data = result.getData();
     if (data != null) {
         String path = data.getStringExtra(Const.BundleExtras.FILE_PATH);
 
-        File folder = new File(path);
-        if (folder.listFiles() != null) {
+        fileToUpload = new File(path);
+        if(FilenameUtils.getExtension(fileToUpload.toString()).equals("csv")){
+            uploadBtn.setClickable(true);
+            uploadBtn.setActivated(true);
+            uploadBtn.setVisibility(View.VISIBLE);
+            editTextPath.setText(fileToUpload.getAbsolutePath());}
+        else {
+            Toast.makeText(UpTabActivity.this, "incorrect file", Toast.LENGTH_SHORT).show();
+        uploadBtn.setClickable(false);
+        uploadBtn.setActivated(false);
+            uploadBtn.setVisibility(View.GONE);
 
-
-            ArrayList<File> files = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(folder.listFiles())));
-            files.removeIf(new Predicate<File>() {
-                @Override
-                public boolean test(File file) {
-                    return !file.getName().endsWith(".csv");
-                }
-            });
-            editTextPath.setText(Arrays.deepToString(files.toArray()));
-        } else {
-            editTextPath.setText(path);
-        }
     }
+}
+
+
 }else {
     Intent data = result.getData();
     if (data != null) {
@@ -111,21 +143,84 @@ if(isFolderChosen == false) {
             }
         });
 
-        ArrayList<File> files =  new ArrayList<File>(){{}};
+        filesToUpload =  new ArrayList<File>(){{}};
         for (String path : paths) {
             File file = new File(path);
-            files.add(file);
-        }
-            editTextPath.setText(Arrays.deepToString(files.toArray()));
+            filesToUpload.add(file);
 
+        }
+        if(filesToUpload.isEmpty()){
+            uploadBtn.setClickable(false);
+            uploadBtn.setActivated(false);
+            uploadBtn.setVisibility(View.GONE);
+            Toast.makeText(UpTabActivity.this, "No one chosen files is correct ", Toast.LENGTH_SHORT).show();
+        }else {
+            uploadBtn.setVisibility(View.VISIBLE);
+            uploadBtn.setClickable(true);
+            uploadBtn.setActivated(true);
+            editTextPath.setText(Arrays.toString(filesToUpload.toArray()));
+        }
     }
 }
                         }
                     }
                 });
+    public void uploadFiles(File file){
+        backToTabsListBtn.setVisibility(View.GONE);
+        backToTabsListBtn.setActivated(false);
+        backToTabsListBtn.setClickable(false);
+        storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(file.toString()));
+        Uri uri =  Uri.fromFile(file);
+        UploadTask uploadTask = storageReference.putFile(uri);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                backToTabsListBtn.setVisibility(View.VISIBLE);
+                backToTabsListBtn.setActivated(true);
+                backToTabsListBtn.setClickable(true);
+                Log.i(TAG, "onSuccess:File uploaded: "+ Objects.requireNonNull(taskSnapshot.getMetadata()).getName());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.e(TAG, "onFailure: ", e );
+            }
+        });
+    }
+    public void uploadFiles(ArrayList<File> files){
+        backToTabsListBtn.setVisibility(View.GONE);
+        backToTabsListBtn.setActivated(false);
+        backToTabsListBtn.setClickable(false);
 
+        files.forEach(new Consumer<File>() {
+            @Override
+            public void accept(File file) {
+                storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(file.toString()));
+                Uri uri =  Uri.fromFile(file);
+                UploadTask uploadTask = storageReference.putFile(uri);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-        // Если на устройстве нет приложения для работы с файлами, обрабатываем ошибку
+                        Log.i(TAG, "onSuccess:File uploaded: "+ Objects.requireNonNull(taskSnapshot.getMetadata()).getName());
+                        if(files.indexOf(file) == files.size()-1){
 
+                            backToTabsListBtn.setVisibility(View.VISIBLE);
+                            backToTabsListBtn.setActivated(true);
+                            backToTabsListBtn.setClickable(true);
+                            Toast.makeText(UpTabActivity.this, "All files uploaded successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.d(TAG, "onSuccess: "+files.indexOf(file) +" :"+files.size());
 
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Log.e(TAG, "onFailure: ", e );
+                    }
+                });
+            }
+        });
+
+    }
 }

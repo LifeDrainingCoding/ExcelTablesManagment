@@ -17,34 +17,62 @@
             android:background="@drawable/purple_gradient"
             app:backgroundTintMode="multiply"
             style="@style/TextAppearance.AppCompat.Button.textStyle"
-            app:layout_constraintVertical_bias="0.757"
+            app:layout_constraintVertical_bias="0.7"
             android:textAlignment="center"
             android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
             android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
-            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.5"/>
+            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.498"/>
     <com.google.android.material.button.MaterialButton
-            android:text="Choose path"
+            android:text="Choose file path"
             android:layout_width="150dp"
-            android:layout_height="70dp" android:id="@+id/choose_path_btn"
+            android:layout_height="70dp" android:id="@+id/choose_file_path_btn"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/purple_gradient"
             app:backgroundTintMode="multiply"
             style="@style/TextAppearance.AppCompat.Button.textStyle"
-            app:layout_constraintVertical_bias="0.347"
+            app:layout_constraintVertical_bias="0.4"
             android:textAlignment="center"
             android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
             android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
-            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.5"/>
+            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.501"/>
+    <com.google.android.material.button.MaterialButton
+            android:text="Back to tables list"
+            android:layout_width="150dp"
+            android:layout_height="70dp" android:id="@+id/back_to_list_tabs_btn"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/purple_gradient"
+            app:backgroundTintMode="multiply"
+            style="@style/TextAppearance.AppCompat.Button.textStyle"
+            app:layout_constraintVertical_bias="0.871"
+            android:textAlignment="center"
+            android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
+            android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
+            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.501"/>
+    <com.google.android.material.button.MaterialButton
+            android:text="Choose files path"
+            android:layout_width="150dp"
+            android:layout_height="70dp" android:id="@+id/choose_files_path_btn"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/purple_gradient"
+            app:backgroundTintMode="multiply"
+            style="@style/TextAppearance.AppCompat.Button.textStyle"
+            app:layout_constraintVertical_bias="0.55"
+            android:textAlignment="center"
+            android:backgroundTintMode="src_over" android:hapticFeedbackEnabled="true" app:backgroundTint="#9401FB"
+            android:drawableTintMode="multiply" android:textStyle="italic" android:textAllCaps="false"
+            android:textSize="20sp" app:layout_constraintHorizontal_bias="0.501"/>
     <EditText
             android:background="@drawable/border_edit_text"
             android:layout_width="300dp"
-            android:layout_height="48dp"
+            android:layout_height="80dp"
             style="@style/TextView.textStyle"
             android:ems="10"
             android:id="@+id/editTextPath"
             android:layout_weight="1" android:textAlignment="center" android:hint="Here will be your table name"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintVertical_bias="0.266"/>
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintVertical_bias="0.2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
