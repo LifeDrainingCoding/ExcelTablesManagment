@@ -3,6 +3,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.provider.Settings;
+import android.util.AndroidException;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -76,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-       requestPermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE);
-       requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        requestPermissionLauncher.launch(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+
 
     }
 
