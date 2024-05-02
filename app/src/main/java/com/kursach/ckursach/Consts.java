@@ -44,11 +44,24 @@ public class Consts {
     public StorageReference getCSVref(){return FirebaseStorage.getInstance().getReference().child(CSV_DIR);
 
     }
+
     public HashMap<Integer, CheckBoxItem> getCheckBoxItems(){
 
 
         return checkBoxItems;
 
+    }
+    public ArrayList<CheckBoxItem> getCSVList(){
+        ArrayList<CheckBoxItem> list = new ArrayList<>();
+        StorageReference csvFilesDir = getCSVref();
+        Task<ListResult> task = csvFilesDir.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                CheckBoxItem fileName = new CheckBoxItem(item.getName());
+                list.add(fileName);
+                Log.d(TAG, "execute: " + fileName);
+            }
+        });
+        return list;
     }
     public synchronized void  execute(RecyclerView recyclerView,int actionCode) {
 

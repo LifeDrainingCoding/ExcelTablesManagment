@@ -3,6 +3,7 @@ package com.kursach.ckursach;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -37,7 +39,7 @@ import java.util.function.Predicate;
 
 public class DownloadActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private Button btnDownload,btnBackToList;
+    private MaterialButton btnDownload,btnBackToList;
     StorageReference csvRef ;
     private static final String TAG = "DownloadActivity";
     @Override
@@ -50,6 +52,7 @@ public class DownloadActivity extends AppCompatActivity {
         csvRef = Consts.getInstance().getCSVref();
 
     }
+
 
     @Override
     protected void onStart() {
@@ -64,6 +67,11 @@ public class DownloadActivity extends AppCompatActivity {
 
             }
         });
+        btnBackToList.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ListOfAvailableTabsActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
     }
     private  ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -73,6 +81,7 @@ public class DownloadActivity extends AppCompatActivity {
 
                 Intent data = o.getData();
                 if(data != null){
+                    disableButton(btnBackToList);
                     ArrayList<File> files = new ArrayList<>();
 
                     HashMap<Integer, CheckBoxItem> map =  Consts.getInstance().getCheckBoxItems();
@@ -112,6 +121,9 @@ public class DownloadActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                         Log.i(TAG, "onSuccess: "+file1.getAbsolutePath());
+                                        if(files.indexOf(file) == files.size()-1){
+                                            enableButton(btnBackToList);
+                                        }
                                     }
 
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -132,9 +144,15 @@ public class DownloadActivity extends AppCompatActivity {
             }
         }
     });
-
-
-    public void downloadSelectedFiles() {
-
+    public void disableButton(Button button){
+        button.setActivated(false);
+        button.setEnabled(false);
+        button.setVisibility(View.GONE);
     }
+    public void enableButton(Button button){
+        button.setActivated(true);
+        button.setEnabled(true);
+        button.setVisibility(View.VISIBLE);
+    }
+
 }
