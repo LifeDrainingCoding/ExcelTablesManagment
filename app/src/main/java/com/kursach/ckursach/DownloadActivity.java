@@ -121,6 +121,8 @@ public class DownloadActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                         Log.i(TAG, "onSuccess: "+file1.getAbsolutePath());
+                                        saveCSVtoDB(file1);
+
                                         if(files.indexOf(file) == files.size()-1){
                                             enableButton(btnBackToList);
                                         }
@@ -154,5 +156,16 @@ public class DownloadActivity extends AppCompatActivity {
         button.setEnabled(true);
         button.setVisibility(View.VISIBLE);
     }
+    public void saveCSVtoDB(File csv){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                DynamicDB db = new DynamicDB(DownloadActivity.this);
+                db.createTableFromCsv(DownloadActivity.this, csv.toString());
 
+            }
+        });
+
+
+    }
 }

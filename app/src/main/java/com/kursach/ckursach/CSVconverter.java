@@ -1,9 +1,9 @@
 package com.kursach.ckursach;
 
 import android.util.Log;
-import androidx.core.content.UnusedAppRestrictionsBackportCallback;
-import androidx.resourceinspection.annotation.Attribute;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,11 +13,24 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 public class CSVconverter {
+
     private static final String TAG = "CSVconverter";
+    private static final Logger log = LogManager.getLogger(CSVconverter.class);
+static CSVconverter instance = null;
+static CSVconverter getInstance() {
+    if (instance == null) {
+        instance = new CSVconverter();
+
+    }
+    return instance;
+}
+private CSVconverter(){
+
+}
     public String convertCSVtoExcel(String csvPath  ){
+
 
         String filename = FilenameUtils.getBaseName(csvPath);
         try {
@@ -68,5 +81,6 @@ public class CSVconverter {
 
         return null;
     }
+
 
 }

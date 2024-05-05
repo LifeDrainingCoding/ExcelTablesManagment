@@ -169,7 +169,7 @@ if(isMultipleChoice == false) {
         backToTabsListBtn.setVisibility(View.GONE);
         backToTabsListBtn.setActivated(false);
         backToTabsListBtn.setClickable(false);
-        storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(file.toString()));
+        storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(Consts.getInstance().phoneticTranscriber(file.toString())));
         Uri uri =  Uri.fromFile(file);
         UploadTask uploadTask = storageReference.putFile(uri);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -195,7 +195,7 @@ if(isMultipleChoice == false) {
         files.forEach(new Consumer<File>() {
             @Override
             public void accept(File file) {
-                storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(file.toString()));
+                storageReference = Consts.getInstance().getCSVref().child(FilenameUtils.getName(Consts.getInstance().phoneticTranscriber(file.toString())));
                 Uri uri =  Uri.fromFile(file);
                 UploadTask uploadTask = storageReference.putFile(uri);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

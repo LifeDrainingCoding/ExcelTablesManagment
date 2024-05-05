@@ -1,13 +1,10 @@
 package com.kursach.ckursach;
-import android.Manifest;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+
 import android.os.Build;
-import android.provider.Settings;
-import android.util.AndroidException;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -35,11 +32,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
 
 
 
-public class MainActivity extends AppCompatActivity implements PendingIntent.OnFinished {
+
+public class MainActivity extends AppCompatActivity  {
     Intent requestIntent;
     private FirebaseAuth auth;
     private final static String TAG = "LogIn_Activity";
@@ -87,7 +84,7 @@ boolean hasPerms = false;
             }
         });
 
-//       requestIntent  = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
+//       requestIntent  = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
 //        hasPerms = checkSelfPermission(Manifest.permission.MANAGE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 //        Log.i(TAG, "onStart: "+hasPerms);
 //        hasPerms = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
@@ -95,7 +92,6 @@ boolean hasPerms = false;
 //        hasPerms = checkSelfPermission(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION) == PackageManager.PERMISSION_GRANTED;
 //        Log.i(TAG, "onStart: "+hasPerms);
 //if(hasPerms == true){
-//
 //}else {
 //   intentActivityResultLauncher.launch(requestIntent);
 //}
@@ -142,16 +138,16 @@ boolean hasPerms = false;
 //
 //                }
 //            });
-//    private ActivityResultLauncher<Intent> intentActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//        @Override
-//        public void onActivityResult(ActivityResult o) {
-//            if (o.getResultCode() == RESULT_OK) {
-//                //...
-//            }else{
-//                //...
-//            }
-//        }
-//    });
+    private ActivityResultLauncher<Intent> intentActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getResultCode() == RESULT_OK) {
+                //...
+            }else{
+                //...
+            }
+        }
+    });
 
     public void createUserFolder( String email,String password)  {
 
@@ -187,8 +183,5 @@ boolean hasPerms = false;
 
     }
 
-    @Override
-    public void onSendFinished(PendingIntent pendingIntent, Intent intent, int resultCode, String resultData, Bundle resultExtras) {
 
-    }
 }
