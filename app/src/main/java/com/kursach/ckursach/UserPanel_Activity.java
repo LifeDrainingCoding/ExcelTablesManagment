@@ -63,7 +63,7 @@ gotoTablesBtn.setOnClickListener(new View.OnClickListener() {
         finish();
     }
 });
-        //TODO: сделать получение пароля  password =   passwordView.getText().toString()+" "+user.get
+
 
     }
     public void getEmailAndPassword(){

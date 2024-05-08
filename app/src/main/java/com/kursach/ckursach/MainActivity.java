@@ -59,7 +59,6 @@ boolean hasPerms = false;
         registerTxtView = findViewById(R.id.registerTextView);
         storageRef = FirebaseStorage.getInstance().getReference();
     }
-    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onStart() {
         super.onStart();
@@ -72,7 +71,6 @@ boolean hasPerms = false;
                 }else {
                     signIn(email.getText().toString(), password.getText().toString());
                 }
-                signIn(email.getText().toString(), password.getText().toString());// TODO: 29.04.2024 delete this in release
                 }
         });
         registerTxtView.setOnClickListener(new View.OnClickListener() {
@@ -83,18 +81,6 @@ boolean hasPerms = false;
                 finish();
             }
         });
-
-//       requestIntent  = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-//        hasPerms = checkSelfPermission(Manifest.permission.MANAGE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-//        Log.i(TAG, "onStart: "+hasPerms);
-//        hasPerms = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-//        Log.i(TAG, "onStart: "+hasPerms);
-//        hasPerms = checkSelfPermission(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION) == PackageManager.PERMISSION_GRANTED;
-//        Log.i(TAG, "onStart: "+hasPerms);
-//if(hasPerms == true){
-//}else {
-//   intentActivityResultLauncher.launch(requestIntent);
-//}
     }
 
 
@@ -105,11 +91,7 @@ boolean hasPerms = false;
 
     private void signIn(String email, String password) {
 //         [START sign_in_with_email]
-        email = "ancenkokirill104@gmail.com";
-        password = "123456";//todo DELETE THIS IN RELEASE
 
-        String finalEmail1 = email;
-        String finalPassword = password;
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -117,7 +99,7 @@ boolean hasPerms = false;
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            createUserFolder( finalEmail1, finalPassword);
+                            createUserFolder(email, password);
 
 
                         } else {

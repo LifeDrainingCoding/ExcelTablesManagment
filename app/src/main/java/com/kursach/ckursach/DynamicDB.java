@@ -54,7 +54,6 @@ public class DynamicDB extends SQLiteOpenHelper {
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(",");
                     columnNames.add(parts[0]);
-                    columnTypes.add(parts[1]);
                 }
             }catch (ArrayIndexOutOfBoundsException ex){
                 Toast.makeText(context, "Wrong format", Toast.LENGTH_LONG).show();
@@ -65,7 +64,7 @@ public class DynamicDB extends SQLiteOpenHelper {
             StringBuilder sqlQuery = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
             sqlQuery.append(TABLE_NAME).append(" (");
             for (int i = 0; i < columnNames.size(); i++) {
-                sqlQuery.append(COLUMN_NAME).append(" ").append(columnTypes.get(i));
+                sqlQuery.append(COLUMN_NAME).append(i).append(" ").append("varchar");
                 if (i < columnNames.size() - 1) {
                     sqlQuery.append(", ");
                 }
